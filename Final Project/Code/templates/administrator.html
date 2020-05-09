@@ -1,0 +1,26 @@
+<div class="card">
+
+    <div class="card-header">
+        UserID: [{{ UserID }}]
+    </div>
+    <div class="card-body card-padding">
+        Email: {{ Email }}
+    </div>
+
+    <div class="card-body card-padding">
+        InnName: {{ InnName }}
+    </div>
+    <div class="card-body card-padding">
+        UserType: {{ UserTypeID }}
+    </div>
+
+    <p>
+        <a href="private.php?action=edit&UserID={{ UserID }}" class="button">
+            Edit
+        </a>
+        <a class="button" href="private.php?action=remove&UserID={{ UserID }}">
+            Delete
+        </a>
+    </p>
+
+</div>

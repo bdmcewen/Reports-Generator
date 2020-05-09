@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Marketing Report</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="839525427023-gsu8f51pm4itja4o3rl86ittarv5foh9.apps.googleusercontent.com">
+    <meta name="google-signin-scope" content="https://www.googleapis.com/auth/analytics.readonly">
+
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/chartjs-visualizations.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- load google Charts Lib -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {
+            packages: ['corechart', 'table', 'sankey']
+        });
+        //google.charts.setOnLoadCallback(drawChart);
+    </script>
+</head>
+
+<body>
+
+    <!--    Load the Embed API library.-->
+    <script>
+        (function(w, d, s, g, js, fs) {
+            g = w.gapi || (w.gapi = {});
+            g.analytics = {
+                q: [],
+                ready: function(f) {
+                    this.q.push(f);
+                }
+            };
+            js = d.createElement(s);
+            fs = d.getElementsByTagName(s)[0];
+            js.src = 'https://apis.google.com/js/platform.js';
+            fs.parentNode.insertBefore(js, fs);
+            js.onload = function() {
+                g.load('analytics');
+            };
+        }(window, document, 'script'));
+    </script>
+
+
+    <!-- HTML containers to hold the dashboard components.-->
+
+    <header>
+        <div id="embed-api-auth-container"></div>
+        <div id="view-selector-container"></div>
+        <div id="view-name"></div>
+        <div id="active-users-container"></div>
+    </header>
+
+
+    <!-- All traffic 1-2 -->
+    <div class="card-column bg-light m-3">
+
+        <h1 class="card-header">Marketing Analytics Overview</h1>
+
+        <div class="card-column m-3">
+            <div class="Chartjs card  bg-white m-1 mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">All Website Traffic</h4>
+                    <figure class="Chartjs-figure" id="chart-1-container"></figure>
+                    <legend class="Chartjs-legend" id="legend-1-container"></legend>
+                </div>
+            </div>
+
+            <div class="Chartjs card  bg-white m-1 mb-2 ">
+                <div class="card-body">
+                    <h4 class="card-title">Top 10 Traffic Sources</h4>
+                    <div class="card-deck">
+                        <table class="Chartjs-table" id="chart-2-container"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Marketing Channels 3-7 -->
+    <div class="card-column bg-light m-3">
+
+        <h1 class="card-header">Marketing Channels</h1>
+
+        <div class="card-column m-3">
+
+            <div class="Chartjs card  bg-white m-1 mb-2 ">
+                <div class="card-body">
+                    <h4 class="card-title">Marketing Channels</h4>
+                    <figure class="Chartjs-table" id="chart-3-container"></figure>
+                </div>
+            </div>
+
+            <div class="card-deck m-3">
+                <div class="Chartjs card  bg-white m-1 mb-2">
+                    <div class="card-body">
+                        <h4 class="card-title">Organic</h4>
+                        <figure class="Chartjs-figure" id="chart-4-container"></figure>
+                        <ol class="Chartjs-legend" id="legend-4-container"></ol>
+                    </div>
+                </div>
+
+                <div class="Chartjs card  bg-white m-1 mb-2">
+                    <div class="card-body">
+                        <h4 class="card-title">Paid Search</h4>
+                        <figure class="Chartjs-figure" id="chart-5-container"></figure>
+                        <ol class="Chartjs-legend" id="legend-5-container"></ol>
+                    </div>
+                </div>
+
+                <div class="Chartjs card  bg-white m-1 mb-2">
+                    <div class="card-body">
+                        <h4 class="card-title">Referral</h4>
+                        <figure class="Chartjs-figure" id="chart-6-container"></figure>
+                        <ol class="Chartjs-legend" id="legend-6-container"></ol>
+                    </div>
+                </div>
+
+                <div class="Chartjs card  bg-white m-1 mb-2">
+                    <div class="card-body">
+                        <h4 class="card-title">Social</h4>
+                        <figure class="Chartjs-figure" id="chart-7-container"></figure>
+                        <ol class="Chartjs-legend" id="legend-7-container"></ol>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--Paid Search Marketing 8-11 -->
+    <div class="card-column bg-light m-3">
+
+        <h1 class="card-header">Paid Search Marketing</h1>
+
+        <div class="card-column m-3">
+            <div class="Chartjs card  bg-white m-1 mb-2 ">
+                <div class="card-body">
+                    <!-- <h4 class="card-title">Google Adwords</h4> -->
+                    <div class="card-deck">
+                        <figure class="Chartjs-table" id="chart-8-container"></figure>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Users & Demographics 12-13 -->
+    <div class="card-column bg-light m-3">
+
+        <h1 class="card-header">Users & Demographics</h1>
+
+        <div class="card-column m-3">
+
+            <div class="Chartjs card  bg-white m-1 mb-2 ">
+                <div class="card-body">
+                    <h4 class="card-title">Top 10 Cities</h4>
+                    <div class="card-deck">
+                        <table class="Chartjs-table" id="chart-12-container"></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Chartjs card  bg-white m-1 mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">Mobile vs. Desktop vs. Tablet</h4>
+                    <div class="card-deck m-3">
+                        <div class="Chartjs card  bg-white m-1 mb-2">
+                            <div class="card-body">
+                                <h4 class="card-title">Sessions</h4>
+                                <figure class="Chartjs-figure" id="chart-13-container"></figure>
+                                <ol class="Chartjs-legend" id="legend-13-container"></ol>
+                            </div>
+                        </div>
+
+                        <div class="Chartjs card  bg-white m-1 mb-2">
+                            <div class="card-body">
+                                <h4 class="card-title">Revenue</h4>
+                                <figure class="Chartjs-figure" id="chart-14-container"></figure>
+                                <ol class="Chartjs-legend" id="legend-14-container"></ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS Chart.js graphing library and Moment.js to do date
+     formatting and manipulation. -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/view-selector2.js"></script>
+    <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/date-range-selector.js">
+    </script>
+    <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/active-users.js"></script>
+
+
+
+    <!--Dashboard code-->
+
+    <script>
+        // == NOTE ==
+        // This code uses ES6 promises. If you want to use this code in a browser
+        // that doesn't supporting promises natively, you'll have to include a polyfill.
+
+        gapi.analytics.ready(function() {
+
+            /**
+             * Authorize the user immediately if the user has already granted access.
+             * If no access has been created, render an authorize button inside the
+             * element with the ID "embed-api-auth-container".
+             */
+            gapi.analytics.auth.authorize({
+                container: 'embed-api-auth-container',
+                clientid: '839525427023-gsu8f51pm4itja4o3rl86ittarv5foh9.apps.googleusercontent.com'
+            });
+
+
+            /**
+             * Create a new ActiveUsers instance to be rendered inside of an
+             * element with the id "active-users-container" and poll for changes every
+             * five seconds.
+             */
+            var activeUsers = new gapi.analytics.ext.ActiveUsers({
+                container: 'active-users-container',
+                pollingInterval: 5
+            });
+
+
+            /**
+             * Add CSS animation to visually show the when users come and go.
+             */
+            activeUsers.once('success', function() {
+                var element = this.container.firstChild;
+                var timeout;
+
+                this.on('change', function(data) {
+                    var element = this.container.firstChild;
+                    var animationClass = data.delta > 0 ? 'is-increasing' : 'is-decreasing';
+                    element.className += (' ' + animationClass);
+
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function() {
+                        element.className =
+                            element.className.replace(/ is-(increasing|decreasing)/g,
+                                '');
+                    }, 3000);
+                });
+            });
+
+
+            /**
+             * Create a new ViewSelector2 instance to be rendered inside of an
+             * element with the id "view-selector-container".
+             */
+            //var viewSelector = new gapi.analytics.ext.ViewSelector2({container: 'view-selector-container'}).execute();
+
+            var viewSelector = new gapi.analytics.ext.ViewSelector2({
+                container: 'view-selector-container',
+            }).execute();
+
+
+            /**
+             * Update the activeUsers component, the Chartjs charts, and the dashboard
+             * title whenever the user changes the view.
+             */
+            viewSelector.on('viewChange', function(data) {
+                var title = document.getElementById('view-name');
+                title.textContent = data.property.name + ' (' + data.view.name + ')';
+
+                // Start tracking active users for this view.
+                activeUsers.set(data).execute();
+
+                // Render all the of charts for this view.
+                console.log(data.ids);
+
+
+                //Render All Traffic
+                renderAllWebsiteTraffic(data.ids);
+                renderTop10TrafficSourcesTable(data.ids);
+
+                //Render Marketing Channels
+                renderMarketingChannels(data.ids);
+                renderOrganic(data.ids);
+                renderPaidSearch(data.ids);
+                renderReferral(data.ids);
+                renderSocial(data.ids);
+
+                //Render Paid Search Marketing
+                renderGoogleAdwords(data.ids);
+
+
+                //Render Users & Demographics
+                renderTop10Cities(data.ids);
+                renderMobilevsDesktop(data.ids);
+
+            });
+
+            //All Trafffic
+            /**
+             * Draw the a chart.js donut chart with data from the specified view that
+             * overlays session data for the current week over session data for the
+             * It will be rendered inside an element with the id "chart-1-container".
+             * previous week.
+             */
+            function renderAllWebsiteTraffic(ids) {
+
+                // Adjust `now` to experiment with different days, for testing only...
+                var now = moment(); // .subtract(3, 'day');
+
+                var thisMonth = query({
+                    'ids': ids,
+                    'dimensions': 'ga:date,ga:nthDay',
+                    'metrics': 'ga:sessions',
+                    'start-date': moment(now).subtract(1, 'month').format('YYYY-MM-DD'),
+                    'end-date': moment(now).format('YYYY-MM-DD')
+                });
+
+                var lastMonth = query({
+                    'ids': ids,
+                    'dimensions': 'ga:date,ga:nthDay',
+                    'metrics': 'ga:sessions',
+                    'start-date': moment(now).subtract(2, 'month').format('YYYY-MM-DD'),
+                    'end-date': moment(now).subtract(1, 'month').format('YYYY-MM-DD')
+                });
+
+                Promise.all([thisMonth, lastMonth]).then(function(results) {
+                    //console.log(results);
+
+                    var data1 = results[0].rows.map(function(row) {
+                        return +row[2];
+                    });
+                    var data2 = results[1].rows.map(function(row) {
+                        return +row[2];
+                    });
+                    var labels = results[1].rows.map(function(row) {
+                        return +row[0];
+                    });
+
+                    labels = labels.map(function(label) {
+                        return moment(label, 'YYYYMMDD').format('ddd');
+                    });
+
+                    var data = {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Last Month',
+                            fillColor: 'rgba(220,220,220,0.5)',
+                            strokeColor: 'rgba(220,220,220,1)',
+                            pointColor: 'rgba(220,220,220,1)',
+                            pointStrokeColor: '#fff',
+                            data: data2
+                        }, {
+                            label: 'This Month',
+                            fillColor: 'rgba(151,187,205,0.5)',
+                            strokeColor: 'rgba(151,187,205,1)',
+                            pointColor: 'rgba(151,187,205,1)',
+                            pointStrokeColor: '#fff',
+                            data: data1
+                        }]
+                    };
+
+                    new Chart(makeCanvas('chart-1-container')).Line(data);
+                    generateLegend('legend-1-container', data.datasets);
+                });
+            }
+
+            /**
+             * Create a table showing top traffic sources.
+             * It will be rendered inside an element with the id "chart-2-container".
+             */
+
+            function renderTop10TrafficSourcesTable(ids) {
+
+                var now = moment();
+
+                var trafficTable = new gapi.analytics.googleCharts.DataChart({
+                    query: {
+                        'ids': ids,
+                        'dimensions': 'ga:sourceMedium',
+                        'metrics': 'ga:users, ga:sessions, ga:transactions, ga:itemRevenue, ga:goal1ConversionRate, ga:transactionsPerSession',
+                        'sort': '-ga:sessions',
+                        'max-results': 10,
+                        'start-date': moment(now).date(1).month(0).format('YYYY-MM-DD'),
+                        'end-date': moment(now).format('YYYY-MM-DD')
+                    },
+                    chart: {
+                        container: 'chart-2-container',
+                        type: 'TABLE',
+                        options: {
+                            width: '100%',
+                            height: '100%',
+                        }
+                    }
+                });
+
+                trafficTable.on('success', function(response) {
+                    console.log(response);
+                });
+
+                trafficTable.execute();
+
+            }
+
+            // Marketing Channels
+            /**
+             * Create a table showing Marketing Channels sources.
+             * It will be rendered inside an element with the id "chart-3-container".
+             */
+
+            function renderMarketingChannels(ids) {
+
+                var now = moment();
+
+                var marketingChannelsTable = new gapi.analytics.googleCharts.DataChart({
+                    query: {
+                        'ids': ids,
+                        'dimensions': 'ga:channelGrouping',
+                        'metrics': 'ga:users, ga:sessions, ga:transactions, ga:itemRevenue, ga:goal1Starts, ga:transactionsPerSession',
+                        'sort': '-ga:sessions',
+                        'max-results': 10,
+                        'start-date': moment(now).date(1).month(0).format('YYYY-MM-DD'),
+                        'end-date': moment(now).format('YYYY-MM-DD')
+                    },
+                    chart: {
+                        container: 'chart-3-container',
+                        type: 'TABLE',
+                        options: {
+                            width: '100%',
+                        }
+                    }
+                });
+
+                marketingChannelsTable.on('success', function(response) {
+                    console.log(response);
+                });
+
+                marketingChannelsTable.execute();
+
+            }
+
+            /**
+             * Draw the a chart.js donut chart with data from the specified view that
+             * overlays session data for the current week over session data for the
+             * It will be rendered inside an element with the id "chart-4-container".
+             * previous week.
+             */
+            function renderOrganic(ids) {
+                // Adjust `now` to experiment with different days, for testing only...
+                var now = moment(); // .subtract(3, 'day');
+
+                query({
+                        'ids': ids,
+                        'dimensions': 'ga:source',
+                        'metrics': 'ga:sessions',
+                        'sort': '-ga:sessions',
+                        'max-results': 10,
+                        'filters': 'ga:channelGrouping==Organic Search',
+                        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format(
+                            'YYYY-MM-DD'),
+                        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
+                    })
+                    .then(function(response) {
+
+                        var data = [];
+                        var colors = ['#d1dce1', '#b2c5cd', '#93aeb9', '#7496a5', '#5a7d8b', '#46616c',
+                            '#46616c', '#32454d', '#1e2a2e', '#0a0e0f'
+                        ];
+
+                        response.rows.forEach(function(row, i) {
+                            data.push({
+                                value: +row[1],
+                                color: colors[i],
+                                label: row[0]
+                            });
+                        });
+
+                        new Chart(makeCanvas('chart-4-container')).Doughnut(data);
+                        generateLegend('legend-4-container', data);
+                    });
+            }
+
+            /**
+             * Draw the a chart.js donut chart with data from the specified view that
+             * overlays session data for the current week over session data for the
+             * It will be rendered inside an element with the id "chart-5-container".
+             * previous week.
+             */
+            function renderPaidSearch(ids) {
+                // Adjust `now` to experiment with different days, for testing only...
+                var now = moment(); // .subtract(3, 'day');
+
+                query({
+                        'ids': ids,
+                        'dimensions': 'ga:source',
+                        'metrics': 'ga:sessions',
+                        'sort': '-ga:sessions',
+                        'max-results': 10,
+                        'filters': 'ga:channelGrouping==Paid Search',
+                        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format(
+                            'YYYY-MM-DD'),
+                        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
+                    })
+                    .then(function(response) {
+
+                        var data = [];
+                        var colors = ['#d1dce1', '#b2c5cd', '#93aeb9', '#7496a5', '#5a7d8b', '#46616c',
+                            '#46616c', '#32454d', '#1e2a2e', '#0a0e0f'
+                        ];
+
+                        response.rows.forEach(function(row, i) {
+                            data.push({
+                                value: +row[1],
+                                color: colors[i],
+                                label: row[0]
+                            });
+                        });
+
+                        new Chart(makeCanvas('chart-5-container')).Doughnut(data);
+                        generateLegend('legend-5-container', data);
+                    });
+            }
+
+            /**
+             * Draw the a chart.js donut chart with data from the specified view that
+             * overlays session data for the current week over session data for the
+             * It will be rendered inside an element with the id "chart-6-container".
+             * previous week.
+             */
+            function renderReferral(ids) {
+                // Adjust `now` to experiment with different days, for testing only...
+                var now = moment(); // .subtract(3, 'day');
+
+                query({
+                        'ids': ids,
+                        'dimensions': 'ga:source',
+                        'metrics': 'ga:sessions',
+                        'sort': '-ga:sessions',
+                        'max-results': 10,
+                        'filters': 'ga:channelGrouping==Referral',
+                        //'segment': 'gaid%3A%3A-8',
+                        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format(
+                            'YYYY-MM-DD'),
+                        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
+                    })
+                    .then(function(response) {
+
+                        var data = [];
+                        var colors = ['#d1dce1', '#b2c5cd', '#93aeb9', '#7496a5', '#5a7d8b', '#46616c',
+                            '#46616c', '#32454d', '#1e2a2e', '#0a0e0f'
+                        ];
+
+                        response.rows.forEach(function(row, i) {
+                            data.push({
+                                value: +row[1],
+                                color: colors[i],
+                                label: row[0]
+                            });
+                        });
+
+                        new Chart(makeCanvas('chart-6-container')).Doughnut(data);
+                        generateLegend('legend-6-container', data);
+                    });
+            }
+
+            /**
+             * Draw the a chart.js donut chart with data from the specified view that
+             * overlays Social data for the current month over session data for the
+             * It will be rendered inside an element with the id "chart-7-container".
+             * previous week.
+             */
+            function renderSocial(ids) {
+
+                // Adjust `now` to experiment with different days, for testing only...
+                var now = moment(); // .subtract(3, 'day');
+
+                query({
+                        'ids': ids,
+                        'dimensions': 'ga:source',
+                        'metrics': 'ga:sessions',
+                        'sort': '-ga:sessions',
+                        'max-results': 10,
+                        'filters': 'ga:channelGrouping==Social',
+                        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format(
+                            'YYYY-MM-DD'),
+                        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
+                    })
+                    .then(function(response) {
+
+                        var data = [];
+                        var colors = ['#d1dce1', '#b2c5cd', '#93aeb9', '#7496a5', '#5a7d8b', '#46616c',
+                            '#46616c', '#32454d', '#1e2a2e', '#0a0e0f'
+                        ];
+
+                        response.rows.forEach(function(row, i) {
+                            data.push({
+                                value: +row[1],
+                                color: colors[i],
+                                label: row[0]
+                            });
+                        });
+
+                        new Chart(makeCanvas('chart-7-container')).Doughnut(data);
+                        generateLegend('legend-7-container', data);
+                    });
+            }
+
+            // Paid Search marketing          
+            /**
+             * Create a table showing top traffic sources.
+             * It will be rendered inside an element with the id "chart-8-container".
+             */
+
+            function renderGoogleAdwords(ids) {
+
+                var now = moment();
+
+                var trafficTable = new gapi.analytics.googleCharts.DataChart({
+                    query: {
+                        'ids': ids,
+                        'dimensions': 'ga:source',
+                        'metrics': 'ga:users, ga:sessions, ga:transactions, ga:itemRevenue, ga:goal1Starts, ga:transactionsPerSession',
+                        'sort': '-ga:sessions',
+                        'max-results': 10,
+                        'filters': 'ga:channelGrouping==Paid Search',
+                        'start-date': moment(now).date(1).month(0).format('YYYY-MM-DD'),
+                        'end-date': moment(now).format('YYYY-MM-DD')
+                    },
+                    chart: {
+                        container: 'chart-8-container',
+                        type: 'TABLE',
+                        options: {
+                            width: '100%',
+                            height: '100%',
+                        }
+                    }
+                });
+
+                trafficTable.on('success', function(response) {
+                    console.log(response);
+                });
+
+                trafficTable.execute();
+
+            }
+
+
+            // Users & Demographics
+            /**
+             * Create a table showing top traffic sources.
+             * It will be rendered inside an element with the id "chart-12-container".
+             */
+
+            function renderTop10Cities(ids) {
+
+                var now = moment();
+
+                var topCitiesTable = new gapi.analytics.googleCharts.DataChart({
+                    query: {
+                        'ids': ids,
+                        'dimensions': 'ga:city',
+                        'metrics': 'ga:users, ga:sessions, ga:transactions, ga:itemRevenue, ga:transactionsPerSession',
+                        'sort': '-ga:sessions',
+                        'max-results': 10,
+                        'start-date': moment(now).date(1).month(0).format('YYYY-MM-DD'),
+                        'end-date': moment(now).format('YYYY-MM-DD')
+                    },
+                    chart: {
+                        container: 'chart-12-container',
+                        type: 'TABLE',
+                        options: {
+                            width: '100%',
+                            height: '100%',
+                        }
+                    }
+                });
+
+                topCitiesTable.on('success', function(response) {
+                    console.log(response);
+                });
+
+                topCitiesTable.execute();
+
+            }
+
+            /**
+             * Draw the a chart.js donut chart with data from the specified view that
+             * overlays session data for the current week over session data for the
+             * It will be rendered inside an element with the id "chart-13-container".
+             * previous week.
+             */
+
+            function renderMobilevsDesktop(ids) {
+                // Adjust `now` to experiment with different days, for testing only...
+                var now = moment(); // .subtract(3, 'day');
+
+                var sessionsGraph = query({
+                        'ids': ids,
+                        'dimensions': 'ga:deviceCategory',
+                        'metrics': 'ga:sessions',
+                        'sort': '-ga:sessions',
+                        'max-results': 10,
+                        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format(
+                            'YYYY-MM-DD'),
+                        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
+                    })
+                    .then(function(response) {
+
+                        var data = [];
+                        var colors = ['#d1dce1', '#b2c5cd', '#93aeb9', '#7496a5', '#5a7d8b', '#46616c',
+                            '#46616c', '#32454d', '#1e2a2e', '#0a0e0f'
+                        ];
+
+                        response.rows.forEach(function(row, i) {
+                            data.push({
+                                value: +row[1],
+                                color: colors[i],
+                                label: row[0]
+                            });
+                        });
+
+                        new Chart(makeCanvas('chart-13-container')).Doughnut(data);
+                        generateLegend('legend-13-container', data);
+                    });
+
+                var revenueGraph = query({
+                        'ids': ids,
+                        'dimensions': 'ga:deviceCategory',
+                        'metrics': 'ga:transactionRevenue',
+                        'sort': '-ga:transactionRevenue',
+                        'max-results': 10,
+                        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format(
+                            'YYYY-MM-DD'),
+                        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
+                    })
+                    .then(function(response) {
+
+                        var data = [];
+                        var colors = ['#d1dce1', '#b2c5cd', '#93aeb9', '#7496a5', '#5a7d8b', '#46616c',
+                            '#46616c', '#32454d', '#1e2a2e', '#0a0e0f'
+                        ];
+
+                        response.rows.forEach(function(row, i) {
+                            data.push({
+                                value: +row[1],
+                                color: colors[i],
+                                label: row[0]
+                            });
+                        });
+
+                        new Chart(makeCanvas('chart-14-container')).Doughnut(data);
+                        generateLegend('legend-14-container', data);
+                    });
+            }
+
+
+
+            /**
+             * Extend the Embed APIs `gapi.analytics.report.Data` component to
+             * return a promise that is fulfilled with the value returned by the API.
+             * @param {Object} params The request parameters.
+             * @return {Promise} A promise.
+             */
+            function query(params) {
+                return new Promise(function(resolve, reject) {
+                    var data = new gapi.analytics.report.Data({
+                        query: params
+                    });
+                    data.once('success', function(response) {
+                            resolve(response);
+                        })
+                        .once('error', function(response) {
+                            reject(response);
+                        })
+                        .execute();
+                });
+            }
+
+
+            /**
+             * Create a new canvas inside the specified element. Set it to be the width
+             * and height of its container.
+             * @param {string} id The id attribute of the element to host the canvas.
+             * @return {RenderingContext} The 2D canvas context.
+             */
+            function makeCanvas(id) {
+                var container = document.getElementById(id);
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+
+                container.innerHTML = '';
+                canvas.width = container.offsetWidth;
+                canvas.height = container.offsetHeight;
+                container.appendChild(canvas);
+
+                return ctx;
+            }
+
+
+            /**
+             * Create a visual legend inside the specified element based off of a
+             * Chart.js dataset.
+             * @param {string} id The id attribute of the element to host the legend.
+             * @param {Array.<Object>} items A list of labels and colors for the legend.
+             */
+            function generateLegend(id, items) {
+                var legend = document.getElementById(id);
+                legend.innerHTML = items.map(function(item) {
+                    var color = item.color || item.fillColor;
+                    var label = item.label;
+                    return '<li><i style="background:' + color + '"></i>' +
+                        escapeHtml(label) + '</li>';
+                }).join('');
+            }
+
+
+            // Set some global Chart.js defaults.
+            Chart.defaults.global.animationSteps = 60;
+            Chart.defaults.global.animationEasing = 'easeInOutQuart';
+            Chart.defaults.global.responsive = true;
+            Chart.defaults.global.maintainAspectRatio = false;
+            //Chart.defaults.global.legend = 'Left';
+
+
+            /**
+             * Escapes a potentially unsafe HTML string.
+             * @param {string} str An string that may contain HTML entities.
+             * @return {string} The HTML-escaped string.
+             */
+            function escapeHtml(str) {
+                var div = document.createElement('div');
+                div.appendChild(document.createTextNode(str));
+                return div.innerHTML;
+            }
+
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js"></script>
+</body>
+
+</html>

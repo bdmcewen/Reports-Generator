@@ -1,0 +1,67 @@
+/* view selector */
+
+.ViewSelector2 {
+    display: block
+}
+
+.ViewSelector2-item,
+.ViewSelector table {
+    display: inline-block;
+    margin-bottom: 3em;
+    margin-block-end: 2em;
+    margin-top: 3em;
+    width: 100%;
+    padding: 2px;
+    display: contents;
+}
+
+
+/* charts */
+
+
+/* Sources and Medium*/
+
+.SMchart {
+    font-size: .85em;
+    position: relative;
+    height: 30vh;
+    width: 30vw;
+}
+
+.SMchart-figure {
+    height: 250px;
+}
+
+.SMchart-legend {
+    list-style: none;
+    margin: 0;
+    padding: 1em 0 0;
+    text-align: center;
+}
+
+.SMchart-legend>li {
+    display: inline-block;
+    padding: .25em .5em
+}
+
+.SMchart-legend>li>i {
+    display: inline-block;
+    height: 1em;
+    margin-right: .5em;
+    vertical-align: -.1em;
+    width: 1em;
+}
+
+@media (--break-md) {
+    .SMchart-figure {
+        /* Add some breathing room. */
+        margin-right: var(--gap);
+    }
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+    height: auto;
+}
