@@ -1,0 +1,29 @@
+// Initial 
+
+
+
+<--------
+Inn Owners Table
+-------->
+ID, Name, Email, clientId, viewID, permissionslvl
+
+
+
+<------
+Account managers
+-------->
+ID, Name, Email, clearance level
+
+
+
+<--------
+Senior Account Manager
+-------->
+ID, Name, Email, clearance level
+
+
+
+<--------
+Pages
+-------->
+PageID, UserID, URL, DateEnd, DateBegin, UserAPI
