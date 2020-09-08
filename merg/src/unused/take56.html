@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Embed API Demo</title>
+</head>
+
+<body>
+
+    <!-- Step 1: Create the containing elements. -->
+
+    <section id="auth-button"></section>
+    <section id="view-selector"></section>
+    <section id="timeline"></section>
+
+    <!-- Step 2: Load the library. -->
+
+    <script>
+        (function(w, d, s, g, js, fjs) {
+            g = w.gapi || (w.gapi = {});
+            g.analytics = {
+                q: [],
+                ready: function(cb) {
+                    this.q.push(cb)
+                }
+            };
+            js = d.createElement(s);
+            fjs = d.getElementsByTagName(s)[0];
+            js.src = 'https://apis.google.com/js/platform.js';
+            fjs.parentNode.insertBefore(js, fjs);
+            js.onload = function() {
+                g.load('analytics')
+            };
+        }(window, document, 'script'));
+    </script>
+
+
+    <script>
+        gapi.analytics.ready(function() {
+
+            // Step 3: Authorize the user.
+
+            var CLIENT_ID = '839525427023-gsu8f51pm4itja4o3rl86ittarv5foh9.apps.googleusercontent.com';
+
+            gapi.analytics.auth.authorize({
+                container: 'auth-button',
+                clientid: CLIENT_ID,
+            });
+
+            // Step 4: Create the view selector.
+
+            var viewSelector = new gapi.analytics.ViewSelector({
+                container: 'view-selector'
+            });
+
+            // Step 5: Create the timeline chart.
+
+            var timeline = new gapi.analytics.googleCharts.DataChart({
+                reportType: 'ga',
+                query: {
+                    'dimensions': 'ga:sourceMedium',
+                    'metrics': 'ga:users',
+                    'start-date': '30daysAgo',
+                    'end-date': 'yesterday',
+                },
+                chart: {
+                    type: 'LINE',
+                    container: 'timeline'
+                }
+            });
+
+            // Step 6: Hook up the components to work together.
+
+            gapi.analytics.auth.on('success', function(response) {
+                viewSelector.execute();
+
+                var temp1 = viewSelector.zt.r3;
+
+                var my = JSON.stringify(temp1);
+
+                console.log(temp1);
+
+                /*
+                for (i = 0; i <= 10; i++) {
+                    console.log(temp1(i));
+                }
+
+                
+                Object.entries(temp1).forEach(([key, value]) => console.log(`${key}: ${value.name}`));
+                console.log("Hello");
+
+                */
+
+
+            });
+
+
+
+
+
+            timeline.on('success', function(response) {
+                var chart = response.chart;
+                var dataTable = response.dataTable;
+
+                console.log(dataTable);
+
+            });
+
+            viewSelector.on('change', function(ids) {
+                //console.log(ids);
+
+                var newIds = {
+                    query: {
+                        ids: ids
+                    }
+                }
+
+                timeline.set(newIds).execute();
+
+
+            });
+        });
+    </script>
+
+</body>
+
+</html>

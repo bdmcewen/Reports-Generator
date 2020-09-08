@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello Analytics Reporting API V4</title>
+    <meta name="google-signin-client_id" content="839525427023-gsu8f51pm4itja4o3rl86ittarv5foh9.apps.googleusercontent.com">
+    <meta name="google-signin-scope" content="https://www.googleapis.com/auth/analytics.readonly">
+</head>
+
+<body>
+
+    <h1>Hello Analytics Reporting API V4</h1>
+
+    <!-- The Sign-in button. This will run `queryReports()` on success. -->
+    <p class="g-signin2" data-onsuccess="queryReports"></p>
+
+    <!-- The API response will be printed here. -->
+    <textarea cols="80" rows="20" id="query-output"></textarea>
+
+    <div class="card-column bg-light m-3">
+
+        <h1 class="card-header">test</h1>
+
+        <div class="card-column m-3">
+            <div class="Chartjs card  bg-white m-1 mb-2">
+                <div class="card-body">
+                    <h4 class="card-title">test</h4>
+                    <figure class="Chartjs-figure" id="chart-1-container"></figure>
+                    <legend class="Chartjs-legend" id="legend-1-container"></legend>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        // Replace with your view ID.
+        var VIEW_ID = '72731020';
+
+        // Query the API and print the results to the page.
+        function queryReports() {
+            gapi.client.request({
+                path: '/v4/reports:batchGet',
+                root: 'https://analyticsreporting.googleapis.com/',
+                method: 'POST',
+                body: {
+                    reportRequests: [{
+                        viewId: VIEW_ID,
+                        dateRanges: [{
+                            startDate: '30daysAgo',
+                            endDate: 'yesterday'
+                        }],
+                        metrics: [{
+                            expression: 'ga:sessions'
+                        }],
+                        dimensions: [{
+                            name: 'ga:date,ga:nthDay'
+                        }]
+                    }]
+                }
+            }).then(displayResults, console.error.bind(console));
+        }
+
+        function displayResults(response) {
+            console.log(response);
+            var formattedJson = JSON.stringify(response.result, null, 2);
+            document.getElementById('query-output').value = formattedJson;
+
+            var data = [];
+            var colors = ['#d1dce1', '#b2c5cd', '#93aeb9', '#7496a5', '#5a7d8b', '#46616c',
+                '#46616c', '#32454d', '#1e2a2e', '#0a0e0f'
+            ];
+
+            response.rows.forEach(function(row, i) {
+                data.push({
+                    value: +row[1],
+                    color: colors[i],
+                    label: row[0]
+                });
+            });
+
+            new Chart(makeCanvas('chart-1-container')).Doughnut(data);
+            generateLegend('legend-1-container', data);
+        }
+    </script>
+
+    <!-- Load the JavaScript API client and Sign-in library. -->
+    <script src="https://apis.google.com/js/client:platform.js"></script>
+
+
+
+
+</body>
+
+</html>
